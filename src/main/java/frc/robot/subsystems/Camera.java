@@ -14,14 +14,20 @@ import edu.wpi.first.cameraserver.CameraServerShared;
 import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Camera extends SubsystemBase {
   /** Creates a new Camera. */
+  
+
   public Camera() {
     
   }
-   public void robotInit() {
+   public void camSubsystem() {
+    
       Thread m_visionThread = new Thread(
         () -> {
         UsbCamera cam = CameraServer.startAutomaticCapture();
@@ -41,19 +47,21 @@ public class Camera extends SubsystemBase {
       });
       m_visionThread.setDaemon(true);
       m_visionThread.start();
+      
     };
+
 
 
 
 
    
 
-
-
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  
+ 
+
   }
 }
 
