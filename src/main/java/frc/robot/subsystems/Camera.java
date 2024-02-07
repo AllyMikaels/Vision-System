@@ -22,11 +22,25 @@ public class Camera extends SubsystemBase {
     
   }
    public void robotInit() {
-      Thread m_visionThread = new Thread(){
+      Thread m_visionThread = new Thread(
+        () -> {
         UsbCamera cam = CameraServer.startAutomaticCapture();
-        
-      };
-
+        cam.setResolution(640, 480);
+        CvSource outputStream = CameraServer.putVideo("Rectangle", 640, 480);
+        CvSink cvSink = CameraServer.getVideo();
+        Mat mat = new Mat();
+        while (!Thread.interrupted()) {
+          if (cvSink.grabFrame(mat) == 0) {
+            outputStream.notifyError(cvSink.getError());
+            continue;
+        }
+        Imgproc.rectangle(
+           mat, new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
+      }
+      outputStream.putFrame(mat);
+      });
+      m_visionThread.setDaemon(true);
+      m_visionThread.start();
     };
 
 
