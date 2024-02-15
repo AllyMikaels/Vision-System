@@ -9,11 +9,16 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import edu.wpi.first.apriltag.AprilTagDetection;
+import edu.wpi.first.apriltag.AprilTagDetector;
+import edu.wpi.first.apriltag.AprilTagPoseEstimator;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cameraserver.CameraServerShared;
 import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.math.estimator.PoseEstimator;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
@@ -50,11 +55,49 @@ public class Camera extends SubsystemBase {
       
     };
 
+    public void AprilTagDetec(){
+     // set up USB camera capture
+CameraServer.startAutomaticCapture();
+CvSink cvSink = CameraServer.getVideo();
+
+// set up AprilTag detector
+AprilTagDetector detector = new AprilTagDetector();
+AprilTagDetector.Config config = new AprilTagDetector.Config();
+// set config parameters, e.g. config.blah = 5;
+detector.setConfig(config);
+detector.addFamily("tag16h5");
+
+// Set up Pose Estimator
+AprilTagPoseEstimator.Config poseEstConfig = new AprilTagPoseEstimator.Config(0, 0, 0, 0, 0);
+AprilTagPoseEstimator estimator = new AprilTagPoseEstimator(poseEstConfig);
+
+Mat mat = new Mat();
+Mat graymat = new Mat();
+
+while (!Thread.interrupted()) {
+  // grab image from camera
+  long time = cvSink.grabFrame(mat);
+  if (time == 0) {
+    continue;  // error getting image
+  }
+
+  // convert image to grayscale
+  Imgproc.cvtColor(mat, graymat, Imgproc.COLOR_BGR2GRAY);
+  
+  // run detection
+  for (AprilTagDetection detection : detector.detect(graymat)) {
+    // filter by property
+
+    // run pose estimator
+    //Transform3d pose = PoseEstimator.estimate(detection);
+  }}
+
+}
 
 
 
 
-   
+
 
   @Override
   public void periodic() {
