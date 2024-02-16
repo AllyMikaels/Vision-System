@@ -55,7 +55,7 @@ public class Camera extends SubsystemBase {
       
     };
 
-    public void AprilTagDetec(){
+    /*public void AprilTagDetec(){
      // set up USB camera capture
 CameraServer.startAutomaticCapture();
 CvSink cvSink = CameraServer.getVideo();
@@ -92,7 +92,7 @@ while (!Thread.interrupted()) {
     //Transform3d pose = PoseEstimator.estimate(detection);
   }}
 
-}
+}*/
 
 
 
