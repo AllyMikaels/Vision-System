@@ -18,6 +18,7 @@ import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.estimator.PoseEstimator;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -55,7 +56,7 @@ public class Camera extends SubsystemBase {
       
     };
 
-    /*public void AprilTagDetec(){
+    public void AprilTagDetec(){
      // set up USB camera capture
 CameraServer.startAutomaticCapture();
 CvSink cvSink = CameraServer.getVideo();
@@ -92,7 +93,7 @@ while (!Thread.interrupted()) {
     //Transform3d pose = PoseEstimator.estimate(detection);
   }}
 
-}*/
+}
 
 
 
